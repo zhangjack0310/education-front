@@ -1,14 +1,10 @@
-
 <template>
   <div>
-      <p style="text-align: center">特种作业报名</p>
-  <div style="width: 80%">
     <fm-generate-form :data="jsonData" :remote="remoteFuncs" :value="editData" ref="generateForm">
 
     </fm-generate-form>
     <el-button type="primary" @click="handleSubmit">提交</el-button>
   </div>
-    </div>
 </template>
 
 <script>
@@ -18,6 +14,14 @@
         jsonData: {
           'list':
             [{
+            'type': 'text',
+            'icon': 'icon-wenzishezhi-',
+            'options': {'defaultValue': '', 'customClass': '', 'remoteFunc': 'func_1726194406000_85405'},
+            'name': '特种作业报名',
+            'key': '1726194406000_85405',
+            'model': 'title',
+            'rules': []
+          }, {
             'type': 'input',
             'icon': 'icon-input',
             'options': {
@@ -138,7 +142,7 @@
               'defaultValue': '',
               'readonly': false,
               'disabled': false,
-              'editable': false,
+              'editable': true,
               'clearable': true,
               'placeholder': '',
               'startPlaceholder': '',
@@ -230,7 +234,7 @@
               'defaultValue': '',
               'readonly': false,
               'disabled': false,
-              'editable': false,
+              'editable': true,
               'clearable': true,
               'placeholder': '',
               'startPlaceholder': '',
@@ -253,7 +257,7 @@
               'defaultValue': '',
               'readonly': false,
               'disabled': false,
-              'editable': false,
+              'editable': true,
               'clearable': true,
               'placeholder': '',
               'startPlaceholder': '',
@@ -288,7 +292,24 @@
             'key': '1726194957000_99318',
             'model': 'work_cert_no',
             'rules': [{'type': 'string', 'message': '工种证件编号格式不正确'}]
-          }], 'config': {'labelWidth': 100, 'labelPosition': 'right', 'size': 'mini', 'platform': 'mobile'}
+          }], 'config':
+            {
+    'labelWidth': 100,
+    'labelPosition': 'left',
+    'size': 'default',
+    'customClass': '',
+    'ui': 'element',
+    'layout': 'horizontal',
+    'width': '100%',
+    'hideLabel': false,
+    'hideErrorMessage': false,
+    'eventScript': [{'key': 'mounted', 'name': 'mounted', 'func': ''}, {
+      'key': 'refresh',
+      'name': 'refresh',
+      'func': ''
+    }, {'key': 'onFormChange', 'name': 'onFormChange', 'type': 'rule'}],
+    'platform': 'mobile'
+  }
         },
         editData: {},
         remoteFuncs: {
@@ -314,18 +335,3 @@
     }
   }
 </script>
-
-<style>
-  .el-picker-panel{
-    width: 70%;
-  }
-  .el-date-picker{
-    width: 70%;
-  }
-  .el-popper{
-    width: 70%;
-  }
-  .el-picker-panel__content{
-    width: 85% !important;
-  }
-</style>
