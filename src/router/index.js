@@ -9,11 +9,6 @@ export default new Router({
   routes: [
     {
       path: '/',
-      name: 'HelloWord',
-      component: Form
-    },
-    {
-      path: '/1',
       name: 'Form',
       component: Form
     }

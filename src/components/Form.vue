@@ -3,7 +3,7 @@
   <div>
       <p style="text-align: center">特种作业报名</p>
   <div style="width: 80%">
-    <fm-generate-form :data="jsonData" :remote="remoteFuncs" :value="editData" ref="generateForm">
+    <fm-generate-form :data="jsonData" :remote="remoteFuncs" :value="editData" @on-change="onChange" ref="generateForm">
 
     </fm-generate-form>
     <el-button type="primary" @click="handleSubmit">提交</el-button>
@@ -12,6 +12,7 @@
 </template>
 
 <script>
+  import api from "./../../utils/api";
   export default {
     data () {
       return {
@@ -43,7 +44,7 @@
               'width': '100%',
               'defaultValue': '',
               'required': true,
-              'dataType': 'int',
+              'dataType': 'string',
               'pattern': '',
               'placeholder': '',
               'disabled': false,
@@ -54,7 +55,7 @@
             'name': '年龄',
             'key': '1726193118000_71463',
             'model': 'age',
-            'rules': [{'type': 'int', 'message': '年龄格式不正确'}]
+            'rules': [{'type': 'string', 'message': '年龄格式不正确'}]
           }, {
             'type': 'input',
             'icon': 'icon-input',
@@ -81,7 +82,7 @@
               'width': '100%',
               'defaultValue': '',
               'required': true,
-              'dataType': 'int',
+              'dataType': 'string',
               'pattern': '',
               'placeholder': '',
               'disabled': false,
@@ -92,7 +93,7 @@
             'name': '手机号',
             'key': '1726193691000_49',
             'model': 'phone',
-            'rules': [{'type': 'int', 'message': '手机号格式不正确'}]
+            'rules': [{'type': 'string', 'message': '手机号格式不正确'}]
           }, {
             'type': 'input',
             'icon': 'icon-input',
@@ -110,18 +111,18 @@
             },
             'name': '单位名称',
             'key': '1726193642000_15347',
-            'model': 'input_1726193642000_15347',
+            'model': 'company',
             'rules': [{'type': 'string', 'message': '单位名称格式不正确'}]
           }, {
             'type': 'input',
             'icon': 'icon-input',
             'options': {
               'width': '100%',
-              'defaultValue': '请输入学历',
-              'required': false,
+              'defaultValue': '',
+              'required': true,
               'dataType': 'string',
               'pattern': '',
-              'placeholder': '',
+              'placeholder': '请填写学历',
               'disabled': false,
               'maxlength': -1,
               'showWordLimit': false,
@@ -129,7 +130,7 @@
             },
             'name': '学历',
             'key': '1726195407000_58312',
-            'model': 'input_1726195407000_58312',
+            'model': 'education',
             'rules': [{'type': 'string', 'message': '学历格式不正确'}]
           }, {
             'type': 'date',
@@ -146,7 +147,7 @@
               'type': 'date',
               'format': 'yyyy-MM-dd',
               'timestamp': false,
-              'required': false,
+              'required': true,
               'width': '',
               'remoteFunc': 'func_1726193139000_45590'
             },
@@ -163,7 +164,7 @@
               'disabled': false,
               'clearable': false,
               'placeholder': '请选择性别',
-              'required': false,
+              'required': true,
               'showLabel': false,
               'width': '',
               'options': [{'value': '男'}, {'value': '女'}],
@@ -177,7 +178,7 @@
             'key': '1726193053000_88061',
             'model': 'gender',
             'rules': []
-          }, {
+          },  {
             'type': 'select',
             'icon': 'icon-select',
             'options': {
@@ -186,18 +187,18 @@
               'disabled': false,
               'clearable': false,
               'placeholder': '',
-              'required': false,
+              'required': true,
               'showLabel': false,
               'width': '',
               'options': [{'value': '取证'}, {'value': '复审'}],
-              'remote': true,
+              'remote': false,
               'filterable': false,
               'remoteOptions': [],
               'props': {'value': 'value', 'label': 'label'},
-              'remoteFunc': 'firstQualifiedFunc'
+              'remoteFunc': 'func_1726193053000_88062'
             },
             'name': '取证/复审',
-            'key': '1726191111000_75885',
+            'key': '1726193053000_88062',
             'model': 'first_qualified',
             'rules': []
           }, {
@@ -209,7 +210,7 @@
               'disabled': false,
               'clearable': false,
               'placeholder': '',
-              'required': false,
+              'required': true,
               'showLabel': false,
               'width': '',
               'options': [{'value': '低压电工作业'}, {'value': '高压电工作业'}, {'value': '电力电缆作业'}, {'value': '继电保护作业'}, {'value': '电气试验作业'}, {'value': '防爆电气作业'}, {'value': '熔化焊接与热切割作业'}, {'value': '压力焊作业'}, {'value': '登高架设作业'}, {'value': '高处安装、维护、拆除作业'}, {'value': '制冷与空调设备运行操作作业'}, {'value': '制冷与空调设备安装修理作业'}, {'value': '地下有限空间监护作业'}],
@@ -221,18 +222,19 @@
             },
             'name': '报名工种',
             'key': '1726193887000_26943',
-            'model': 'work_type',
+            'model': 'work_project',
             'rules': []
           }, {
             'type': 'date',
             'icon': 'icon-date',
             'options': {
+              'display': false,
               'defaultValue': '',
               'readonly': false,
               'disabled': false,
               'editable': false,
               'clearable': true,
-              'placeholder': '',
+              'placeholder': '取证不填写，复审填写',
               'startPlaceholder': '',
               'endPlaceholder': '',
               'type': 'date',
@@ -255,7 +257,7 @@
               'disabled': false,
               'editable': false,
               'clearable': true,
-              'placeholder': '',
+              'placeholder': '取证不填写，复审填写',
               'startPlaceholder': '',
               'endPlaceholder': '',
               'type': 'date',
@@ -278,7 +280,7 @@
               'required': false,
               'dataType': 'string',
               'pattern': '',
-              'placeholder': '',
+              'placeholder': '取证不填写，复审填写',
               'disabled': false,
               'maxlength': -1,
               'showWordLimit': false,
@@ -288,26 +290,64 @@
             'key': '1726194957000_99318',
             'model': 'work_cert_no',
             'rules': [{'type': 'string', 'message': '工种证件编号格式不正确'}]
-          }], 'config': {'labelWidth': 100, 'labelPosition': 'right', 'size': 'mini', 'platform': 'mobile'}
+          }
+            ], 'config': {'labelWidth': 100, 'labelPosition': 'right', 'size': 'mini', 'platform': 'mobile'}
         },
+        additionalData: [],
         editData: {},
         remoteFuncs: {
-
-          firstQualifiedFunc (resolve) {
-            // 取证/复审 first_qualified
-            // Call callback function once get the data from remote server
-            // resolve(data)
-          },
+          //
+          // firstQualifiedFunc (resolve) {
+          //   console.log("FFF", resolve)
+          //   // 取证/复审 first_qualified
+          //   // Call callback function once get the data from remote server
+          //   // resolve(data)
+          // },
 
         }
       }
     },
     methods: {
+      onChange(field, value, data) {
+        // if (field === 'first_qualified') {
+        //   if (value === '取证') {
+        //     this.jsonData.list[10].options.disabled = true
+        //     this.jsonData.list[11].options.disabled = true
+        //     this.jsonData.list[12].options.disabled = true
+        //     this.jsonData.list[10].options.required = false
+        //     this.jsonData.list[11].options.required = false
+        //     this.jsonData.list[12].options.required = false
+        //   }
+        //   if (value === '复审') {
+        //     this.jsonData.list[10].options.disabled = false
+        //     this.jsonData.list[11].options.disabled = false
+        //     this.jsonData.list[12].options.disabled = false
+        //     this.jsonData.list[10].options.required = true
+        //     this.jsonData.list[11].options.required = true
+        //     this.jsonData.list[12].options.required = true
+        //   }
+        // }
+      },
       handleSubmit () {
+
+        // this.$refs.generateForm.setOptions(['work_cert_no'], {
+        //   disable: true
+        // })
+        console.log(this.$refs.generateForm.getData())
         this.$refs.generateForm.getData().then(data => {
+          console.log('data', data)
+          api.insert_student(data).then((res) => {
+            console.log(res)
+        if (res.code === 1) {
+
+        }
+      }).catch((err) => {
+        this.$message.error(err)
+      })
           // data check success
           // data - form data
         }).catch(e => {
+          console.log("error", error)
           // data check failed
         })
       }
