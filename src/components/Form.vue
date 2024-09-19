@@ -13,6 +13,7 @@
 
 <script>
   import api from "./../../utils/api";
+  import { Message } from 'element-ui';
   export default {
     data () {
       return {
@@ -338,8 +339,11 @@
           console.log('data', data)
           api.insert_student(data).then((res) => {
             console.log(res)
-        if (res.code === 1) {
-
+        if (res.insert === true) {
+          Message.success("报名成功")
+          this.$refs.generateForm.reset()
+        } else {
+          Message.error("报名失败，请联系相关老师处理")
         }
       }).catch((err) => {
         this.$message.error(err)
