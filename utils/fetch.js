@@ -1,6 +1,6 @@
 /* eslint-disable */
 import axios from 'axios'
-let baseURL = "http://172.26.9.233:8888/education/";
+let baseURL = "https://pape.paquapp.com/education/";
 import { Message } from 'element-ui';
 const instance = axios.create({
   baseURL,
