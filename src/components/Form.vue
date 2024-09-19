@@ -339,7 +339,7 @@
           console.log('data', data)
           api.insert_student(data).then((res) => {
             console.log(res)
-        if (res.insert === true) {
+        if (res.data.insert === true) {
           Message.success("报名成功")
           this.$refs.generateForm.reset()
         } else {
