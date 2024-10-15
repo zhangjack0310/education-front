@@ -83,7 +83,6 @@
 
 <script>
   import api from './../../utils/api'
-  import cityCode from './../province.js'
   import {Message} from 'element-ui'
   import axios from 'axios'
 
@@ -569,8 +568,8 @@
                 return false
               }
               const kb = file.size / 1000
-              if (!(kb < 300)) {
-                this.$message.error('图片大小不能超过300kB!')
+              if (!(kb < 500)) {
+                this.$message.error('图片大小不能超过500kB!')
                 return false
               }
               let form_data = new FormData()
