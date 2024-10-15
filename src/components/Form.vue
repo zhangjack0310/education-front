@@ -65,7 +65,7 @@
               'defaultValue': '',
               'required': true,
               'dataType': 'string',
-              'pattern': '',
+              'pattern': '^[1-9]\\d{5}[1-9]\\d{3}((0\\d)|(1[0-2]))(([0|1|2]\\d)|3[0-1])\\d{3}[0-9Xx]$',
               'placeholder': '',
               'disabled': false,
               'maxlength': -1,
@@ -343,7 +343,12 @@
           Message.success("报名成功")
           this.$refs.generateForm.reset()
         } else {
-          Message.error("报名失败，请联系相关老师处理")
+          if (res.data.reason) {
+            Message.error(res.data.reason)
+          } else {
+            Message.error("报名失败，请联系相关老师处理")
+          }
+
         }
       }).catch((err) => {
         this.$message.error(err)

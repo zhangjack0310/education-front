@@ -34,6 +34,12 @@ import Element from 'element-ui'
 Vue.use(ElementUI)
 Vue.use(Element)
 
+Vue.filter('check_img', function (el) {
+  if (el && el.indexOf('http') < 0) {
+    el = 'https://res.paquapp.com/' + el
+  }
+  return el
+});
 
 
 

@@ -15,11 +15,17 @@ export default {
     })
   },
   insert_student(data) {
-    console.log('post')
     return fetch({
       method: 'POST',
       url: 'student_info/',
       data: data
+    })
+  },
+  getOSSToken(params){
+    return fetch({
+      method: 'GET',
+      url: 'oss/get_token/',
+      data: params
     })
   },
 
